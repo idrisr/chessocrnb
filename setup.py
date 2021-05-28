@@ -55,6 +55,7 @@ setuptools.setup(
     include_package_data = True,
     install_requires = requirements,
     extras_require={ 'dev': dev_requirements },
+    scripts=['bin/thing'],
     python_requires  = '>=' + cfg['min_python'],
     long_description = long_description,
     long_description_content_type = 'text/markdown',
