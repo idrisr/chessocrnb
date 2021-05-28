@@ -9,6 +9,18 @@ entries:
     - output: web,pdf
       title: Overview
       url: /
+    - output: web,pdf
+      title: line
+      url: line.html
+    - output: web,pdf
+      title: chessocr
+      url: util.html
+    - output: web,pdf
+      title: extract
+      url: extract.html
+    - output: web,pdf
+      title: image
+      url: image.html
     output: web
     title: chessocr
   output: web

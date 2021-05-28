@@ -2,9 +2,33 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {}
+index = {"Line": "00_line.ipynb",
+         "partitionLines": "00_line.ipynb",
+         "filterCloseLines": "00_line.ipynb",
+         "writeDocumentationImage": "01_util.ipynb",
+         "showImage": "01_util.ipynb",
+         "drawLine": "01_util.ipynb",
+         "drawContour": "03_image.ipynb",
+         "drawBoundaries": "01_util.ipynb",
+         "drawPerspective": "01_util.ipynb",
+         "drawLines": "01_util.ipynb",
+         "drawPoint": "01_util.ipynb",
+         "ratio": "01_util.ipynb",
+         "randomColor": "01_util.ipynb",
+         "largestContour": "02_extract.ipynb",
+         "ignoreContours": "02_extract.ipynb",
+         "extractGrid": "02_extract.ipynb",
+         "extractTiles": "02_extract.ipynb",
+         "extractPerspective": "02_extract.ipynb",
+         "extractBoards": "02_extract.ipynb",
+         "line_filter": "03_image.ipynb",
+         "contourFilter": "03_image.ipynb",
+         "Image": "03_image.ipynb"}
 
-modules = []
+modules = ["line.py",
+           "util.py",
+           "extract.py",
+           "image.py"]
 
 doc_url = "https://idrisr.github.io/chessocr/"
 

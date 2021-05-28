@@ -1,5 +1,9 @@
 {
   "chessocr": {
-    "Overview": "/"
+    "Overview": "/",
+    "line": "line.html",
+    "chessocr": "util.html",
+    "extract": "extract.html",
+    "image": "image.html"
   }
 }
