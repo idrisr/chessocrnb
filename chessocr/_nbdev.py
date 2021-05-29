@@ -23,7 +23,8 @@ index = {"Line": "00_line.ipynb",
          "extractBoards": "02_extract.ipynb",
          "line_filter": "03_image.ipynb",
          "contourFilter": "03_image.ipynb",
-         "Image": "03_image.ipynb"}
+         "drawContours": "03_image.ipynb",
+         "draw_hough_lines": "03_image.ipynb"}
 
 modules = ["line.py",
            "util.py",
