@@ -2,34 +2,16 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"Line": "00_line.ipynb",
-         "partitionLines": "00_line.ipynb",
-         "filterCloseLines": "00_line.ipynb",
-         "writeDocumentationImage": "01_util.ipynb",
-         "showImage": "01_util.ipynb",
-         "drawLine": "01_util.ipynb",
-         "drawContour": "03_image.ipynb",
-         "drawBoundaries": "01_util.ipynb",
-         "drawPerspective": "01_util.ipynb",
-         "drawLines": "01_util.ipynb",
-         "drawPoint": "01_util.ipynb",
-         "ratio": "01_util.ipynb",
-         "randomColor": "01_util.ipynb",
-         "largestContour": "02_extract.ipynb",
-         "ignoreContours": "02_extract.ipynb",
-         "extractGrid": "02_extract.ipynb",
-         "extractTiles": "02_extract.ipynb",
-         "extractPerspective": "02_extract.ipynb",
-         "extractBoards": "02_extract.ipynb",
-         "line_filter": "03_image.ipynb",
-         "contourFilter": "03_image.ipynb",
-         "drawContours": "03_image.ipynb",
-         "draw_hough_lines": "03_image.ipynb"}
+index = {"toPIL": "00_image.ipynb",
+         "color_to_gray": "00_image.ipynb",
+         "gray_to_bw": "00_image.ipynb",
+         "contourFilter": "00_image.ipynb",
+         "bw_to_contours": "00_image.ipynb",
+         "draw_hough_lines": "00_image.ipynb",
+         "draw_hough_linesp": "00_image.ipynb",
+         "Lines": "00_image.ipynb"}
 
-modules = ["line.py",
-           "util.py",
-           "extract.py",
-           "image.py"]
+modules = ["image.py"]
 
 doc_url = "https://idrisr.github.io/chessocr/"
 
