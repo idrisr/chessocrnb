@@ -2,16 +2,27 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"toPIL": "00_image.ipynb",
-         "color_to_gray": "00_image.ipynb",
-         "gray_to_bw": "00_image.ipynb",
-         "contourFilter": "00_image.ipynb",
-         "bw_to_contours": "00_image.ipynb",
-         "draw_hough_lines": "00_image.ipynb",
-         "draw_hough_linesp": "00_image.ipynb",
-         "Lines": "00_image.ipynb"}
+index = {"toPIL": "01_preprocess.ipynb",
+         "color_to_gray": "01_preprocess.ipynb",
+         "gray_to_bw": "01_preprocess.ipynb",
+         "is_bw": "01_preprocess.ipynb",
+         "contourFilter": "01_preprocess.ipynb",
+         "drawContour": "01_preprocess.ipynb",
+         "bw_to_contours": "01_preprocess.ipynb",
+         "draw_hough_lines": "01_preprocess.ipynb",
+         "draw_hough_linesp": "01_preprocess.ipynb",
+         "contour_to_hough": "01_preprocess.ipynb",
+         "Lines": "01_preprocess.ipynb",
+         "Coord": "03-piece-classifier.ipynb",
+         "CropBox": "03-piece-classifier.ipynb",
+         "Color": "03-piece-classifier.ipynb",
+         "Piece": "03-piece-classifier.ipynb",
+         "BoardImage": "03-piece-classifier.ipynb",
+         "get_coord": "03-piece-classifier.ipynb"}
 
-modules = ["image.py"]
+modules = ["image.py",
+           "classifier.py",
+           "None.py"]
 
 doc_url = "https://idrisr.github.io/chessocr/"
 
