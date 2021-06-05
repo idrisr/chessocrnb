@@ -28,7 +28,7 @@ entries:
       title: hough
       url: hough.py.html
     - output: web,pdf
-      title: Old Stuff
+      title: Training Data
       url: 06-training-data.html
     output: web
     title: chessocr

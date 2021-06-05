@@ -18,14 +18,23 @@ index = {"URLs.chess_small": "01_preprocess.ipynb",
          "Coord": "03-piece-classifier.ipynb",
          "CropBox": "03-piece-classifier.ipynb",
          "Color": "03-piece-classifier.ipynb",
-         "Piece": "03-piece-classifier.ipynb",
+         "Piece": "06-training-data.ipynb",
          "BoardImage": "03-piece-classifier.ipynb",
          "get_coord": "03-piece-classifier.ipynb",
-         "Hough": "05_hough.py.ipynb"}
+         "Hough": "05_hough.py.ipynb",
+         "boards_url": "06-training-data.ipynb",
+         "pieces_url": "06-training-data.ipynb",
+         "m": "06-training-data.ipynb",
+         "piece_dirs": "06-training-data.ipynb",
+         "Board": "06-training-data.ipynb",
+         "Boards": "06-training-data.ipynb",
+         "PieceSets": "06-training-data.ipynb",
+         "GameBoard": "06-training-data.ipynb"}
 
 modules = ["image.py",
            "classifier.py",
-           "hough.py"]
+           "hough.py",
+           "training.py"]
 
 doc_url = "https://idrisr.github.io/chessocr/"
 
