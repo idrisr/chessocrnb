@@ -7,6 +7,13 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 import PIL
+from scipy.signal import find_peaks
+
+# Cell
+from .image import *
+from chessocr import image
+from fastai.data.all import *
+URLs.chess_small
 
 # Cell
 class Hough:
@@ -21,19 +28,36 @@ class Hough:
     @property
     def hsig(self):
         """ signal for horizontal lines"""
-        return self.a.sum(axis=0)
+        return self.a.sum(axis=0)[2:-2]
 
     @property
     def vsig(self):
         """ signal for vertical lines"""
-        return self.a.sum(axis=1)
+        return self.a.sum(axis=1)[2:-2]
+
+    @property
+    def vpeaks(self):
+        return find_peaks(self.vsig, distance=10, height=10000)[0]
+
+    @property
+    def hpeaks(self):
+        return find_peaks(self.hsig, distance=10, height=10000)[0]
+
 
     def show(self):
-        fig = plt.figure(figsize=(8, 4))
-        gs = fig.add_gridspec(1, 2)
+        fig = plt.figure(figsize=(12, 4))
+        gs = fig.add_gridspec(1, 3)
         ax1 = fig.add_subplot(gs[0, 0])
-        ax1.plot(self.hsig.ravel())
-        ax1.set_title('horizontal')
+        ax1.plot(self.hsig)
+        ax1.set_title(f'horizontal: {len(self.hpeaks)}')
+        ax1.vlines(self.hpeaks, 0, 1, transform=ax1.get_xaxis_transform(), colors='r')
+
         ax2 = fig.add_subplot(gs[0, 1])
-        ax2.plot(self.vsig.ravel())
-        ax2.set_title('vertical')
+        ax2.plot(self.vsig)
+        ax2.set_title(f'vertical: {len(self.vpeaks)}')
+        ax2.vlines(self.vpeaks, 0, 1, transform=ax2.get_xaxis_transform(), colors='r')
+
+        ax3 = fig.add_subplot(gs[0, 2])
+        ax3.imshow(self.img, cmap='gray')
+        ax3.vlines(self.hpeaks+4, 0, 1, transform=ax3.get_xaxis_transform(), colors='r')
+        ax3.hlines(self.vpeaks+4, 0, 1, transform=ax3.get_yaxis_transform(), colors='r')
