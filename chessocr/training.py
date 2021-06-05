@@ -29,9 +29,30 @@ class Board:
     """
         Represents a rendered board with particular dark and light colors.
         There are no pieces on the board.
+
+        so far assumes the board is oriented towards the white player
     """
-    def __init__(self, img): self.img = img
-    def _repr_png_(self): return self.img.resize((100, 100))._repr_png_()
+    _filemap=dict(zip('abcdefgh', '12345678'))
+    _rankmap=dict(zip('12345678', '87654321'))
+    def __init__(self, url):
+        self.url = url
+        self.reset()
+    def _repr_png_(self): return self.img._repr_png_()
+    def reset(self): self.img = Image.open(self.url).convert('RGBA')
+    def bbox(self, coord):
+        """ bounding box for chess coordinate like a8, b7, f6, etc """
+        assert len(coord)==2
+        assert coord[0] in 'abcdefgh'
+        assert coord[1] in '12345678'
+        file=int(self._filemap[coord[0]])-1
+        rank=int(self._rankmap[coord[1]])-1
+        dx=self.img.size[0]//8
+        dy=self.img.size[1]//8
+        x0=file*dx
+        y0=rank*dy
+        x1=x0+dx
+        y1=y0+dy
+        return (x0, y0, x1, y1,)
 
 # Cell
 class Boards:
@@ -39,7 +60,8 @@ class Boards:
         Container object holding `Board` objects.
     """
     def __init__(self, url):
-        self.boards = [Board(Image.open(_)) for _ in get_image_files(url)]
+        self.url = url
+        self.boards = [Board(_) for _ in get_image_files(self.url)]
         self._png_data = None
     def __len__(self): return len(self.boards)
     def __getitem__(self, key): return self.boards[key]
@@ -67,19 +89,53 @@ class Boards:
 class Piece:
     """ non data descriptor """
     def __set_name__(self, owner, name): self.name=name
-    def __get__(self, obj, type=None): return Image.open(obj.dir/f'{self.name[1]}_{self.name[0]}.png')
+    def __get__(self, obj, type=None): return Image.open(obj.dir/f'{self.name[1]}_{self.name[0]}.png').convert('RGBA')
 
 # Cell
 class PieceSets:
     def __init__(self, dirs): self.sets = [PieceSet(_) for _ in dirs]
     def __getitem__(self, key): return self.sets[key]
+    def __len__(self): return len(self.sets)
 
 # Cell
+#export
 class GameBoard:
     """
         Represents a combination of a Board, PieceSet, and optionally a FEN to create the position.
         If no fen is provided, the GameBoard will be in the starting position
     """
-    def __init__(self, board, piece_set):
+    def __init__(self, board, pieces):
         self.board = board
-        self.piece_set = piece_set
+        self.pieces = pieces
+        self._render()
+
+    def _render(self):
+        """ renders game starting position """
+        img=self.board.img
+        board=self.board
+        pieces=self.pieces
+        img.paste(pieces.wr, board.bbox('a1'), pieces.wr)
+        img.paste(pieces.wr, board.bbox('h1'), pieces.wr)
+        img.paste(pieces.wn, board.bbox('b1'), pieces.wn)
+        img.paste(pieces.wn, board.bbox('g1'), pieces.wn)
+        img.paste(pieces.wb, board.bbox('c1'), pieces.wb)
+        img.paste(pieces.wb, board.bbox('f1'), pieces.wb)
+        img.paste(pieces.wq, board.bbox('d1'), pieces.wq)
+        img.paste(pieces.wk, board.bbox('e1'), pieces.wk)
+
+        img.paste(pieces.br, board.bbox('a8'), pieces.br)
+        img.paste(pieces.br, board.bbox('h8'), pieces.br)
+        img.paste(pieces.bn, board.bbox('b8'), pieces.bn)
+        img.paste(pieces.bn, board.bbox('g8'), pieces.bn)
+        img.paste(pieces.bb, board.bbox('c8'), pieces.bb)
+        img.paste(pieces.bb, board.bbox('f8'), pieces.bb)
+        img.paste(pieces.bq, board.bbox('d8'), pieces.bq)
+        img.paste(pieces.bk, board.bbox('e8'), pieces.bk)
+
+        for k in [f'{i}{j}' for i, j in product('abcdefgh', '2')]:
+            img.paste(pieces.wp, board.bbox(k), pieces.wp)
+        for k in [f'{i}{j}' for i, j in product('abcdefgh', '7')]:
+            img.paste(pieces.bp, board.bbox(k), pieces.bp)
+
+    def _repr_png_(self):
+        return self.board._repr_png_()
