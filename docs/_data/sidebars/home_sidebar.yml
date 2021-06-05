@@ -16,14 +16,20 @@ entries:
       title: image
       url: preprocess.html
     - output: web,pdf
-      title: Title
-      url: 06-training-data.html
+      title: Learner
+      url: 02-learner.html
     - output: web,pdf
       title: Create training data
       url: 03-piece-classifier.html
     - output: web,pdf
+      title: Title
+      url: 04-coreml-experiment.html
+    - output: web,pdf
       title: hough
       url: hough.py.html
+    - output: web,pdf
+      title: Old Stuff
+      url: 06-training-data.html
     output: web
     title: chessocr
   output: web

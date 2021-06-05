@@ -3,8 +3,10 @@
     "Overview": "/",
     "generate screenshot data": "data_explore.html",
     "image": "preprocess.html",
-    "Title": "06-training-data.html",
+    "Learner": "02-learner.html",
     "Create training data": "03-piece-classifier.html",
-    "hough": "hough.py.html"
+    "Title": "04-coreml-experiment.html",
+    "hough": "hough.py.html",
+    "Old Stuff": "06-training-data.html"
   }
 }
