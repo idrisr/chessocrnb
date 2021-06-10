@@ -3,6 +3,7 @@
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
 index = {"URLs.chess_small": "01_preprocess.ipynb",
+         "URLs.website": "01_preprocess.ipynb",
          "toPIL": "01_preprocess.ipynb",
          "color_to_gray": "01_preprocess.ipynb",
          "gray_to_bw": "01_preprocess.ipynb",
@@ -35,11 +36,16 @@ index = {"URLs.chess_small": "01_preprocess.ipynb",
          "converter": "06-training-data.ipynb",
          "FEN": "06-training-data.ipynb",
          "GameBoard": "06-training-data.ipynb",
-         "Game": "06-training-data.ipynb",
+         "pgn_url": "06-training-data.ipynb",
+         "pgn": "06-training-data.ipynb",
+         "small": "06-training-data.ipynb",
          "game": "06-training-data.ipynb",
-         "fen": "06-training-data.ipynb"}
+         "fen": "06-training-data.ipynb",
+         "fens": "06-training-data.ipynb",
+         "sites": "06-training-data.ipynb",
+         "Render": "06-training-data.ipynb"}
 
-modules = ["image.py",
+modules = ["preprocess.py",
            "classifier.py",
            "hough.py",
            "training.py"]

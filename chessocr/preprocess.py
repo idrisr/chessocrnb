@@ -19,6 +19,7 @@ from PIL import ImageOps
 
 # Cell
 URLs.chess_small = "https://chess-screenshots.s3.amazonaws.com/chess-small.tgz"
+URLs.website = "https://chess-screenshots.s3.amazonaws.com/websites.tgz"
 
 # Cell
 def toPIL(f):

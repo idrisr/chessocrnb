@@ -2,7 +2,7 @@
   "chessocr": {
     "Overview": "/",
     "generate screenshot data": "data_explore.html",
-    "image": "preprocess.html",
+    "preprocess": "preprocess.html",
     "Learner": "02-learner.html",
     "Create training data": "03-piece-classifier.html",
     "Title": "04-coreml-experiment.html",

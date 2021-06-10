@@ -13,7 +13,7 @@ entries:
       title: generate screenshot data
       url: data_explore.html
     - output: web,pdf
-      title: image
+      title: preprocess
       url: preprocess.html
     - output: web,pdf
       title: Learner
