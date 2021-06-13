@@ -23,7 +23,7 @@ entries:
       url: 03-piece-classifier.html
     - output: web,pdf
       title: Title
-      url: 04-coreml-experiment.html
+      url: 08 affine transforms.html
     - output: web,pdf
       title: hough
       url: hough.py.html

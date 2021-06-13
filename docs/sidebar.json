@@ -5,7 +5,7 @@
     "preprocess": "preprocess.html",
     "Learner": "02-learner.html",
     "Create training data": "03-piece-classifier.html",
-    "Title": "04-coreml-experiment.html",
+    "Title": "08 affine transforms.html",
     "hough": "hough.py.html",
     "Training Data": "06-training-data.html"
   }
