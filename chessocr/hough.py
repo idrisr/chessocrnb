@@ -3,14 +3,6 @@
 __all__ = ['Hough']
 
 # Cell
-import numpy as np
-import pandas as pd
-from PIL import Image
-import PIL
-from scipy.signal import find_peaks
-from IPython.core.pylabtools import print_figure
-
-# Cell
 from .preprocess import *
 from chessocr import preprocess
 from fastai.data.all import *
@@ -21,29 +13,33 @@ URLs.chess_small
 class Hough:
     """ takes a contoured image and calculates the horizontal and vertical lines based on the hough transform """
 
-    def __init__(self, img):
+    def __init__(self, orig):
         """ img must be binarized image of contours """
-        assert is_bw(img), "Image must be binarized"
-        self.img = img
+        self.orig = orig
+        self.img = preprocess.color_to_contours(orig)
+        assert is_bw(self.img), "Image must be binarized"
         self.a = np.array(self.img)
 
     @property
     def hsig(self):
         """ signal for horizontal lines"""
-        return self.a.sum(axis=1)[2:-2]
+        return self._sig(1)
 
     @property
     def vsig(self):
         """ signal for vertical lines"""
-        return self.a.sum(axis=0)[2:-2]
+        return self._sig(0)
+
+    def _sig(self, axis):
+        return self.a.sum(axis=axis)[2:-2] - self.a.sum(axis=axis)[2:-2].mean()
 
     @property
     def vpeaks(self):
-        return find_peaks(self.vsig, distance=10, height=10000)[0]
+        return fftpeaks(self.vsig)
 
     @property
     def hpeaks(self):
-        return find_peaks(self.hsig, distance=10, height=10000)[0]
+        return fftpeaks(self.hsig)
 
     def _repr_png_(self):
         fig = plt.figure(figsize=(12, 4))
@@ -52,20 +48,21 @@ class Hough:
         ax1.plot(self.hsig)
         ax1.set_title(f'horizontal: {len(self.hpeaks)}')
         ax1.vlines(self.hpeaks, 0, 1, transform=ax1.get_xaxis_transform(), colors='r')
-        ax1.set_xticks(self.hpeaks)
-        ax1.set_xticklabels(self.hpeaks)
+#         ax1.set_xticks(self.hpeaks)
+#         ax1.set_xticklabels(self.hpeaks)
 
         ax2 = fig.add_subplot(gs[0, 1])
         ax2.plot(self.vsig)
         ax2.set_title(f'vertical: {len(self.vpeaks)}')
         ax2.vlines(self.vpeaks, 0, 1, transform=ax2.get_xaxis_transform(), colors='r')
-        ax2.set_xticks(self.vpeaks)
-        ax2.set_xticklabels(self.vpeaks)
+#         ax2.set_xticks(self.vpeaks)
+#         ax2.set_xticklabels(self.vpeaks)
 
         ax3 = fig.add_subplot(gs[0, 2])
-        ax3.imshow(self.img, cmap='gray')
+        ax3.imshow(self.orig, cmap='gray')
         ax3.hlines(self.hpeaks+4, 0, 1, transform=ax3.get_yaxis_transform(), colors='r')
         ax3.vlines(self.vpeaks+4, 0, 1, transform=ax3.get_xaxis_transform(), colors='r')
+
         data = print_figure(fig)
         plt.close(fig)
         return data
