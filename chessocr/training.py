@@ -327,6 +327,9 @@ class Render:
         self.background.save(path)
 
     @property
+    def header(cls): return ("size", "x", "y", "background", "fen", "board", "pieceset")
+
+    @property
     def label(self):
         return (self.size, self.dx, self.dy, self.backurl.name, format(self.fen), self.board.url.name,
                self.piece.dir.name)
