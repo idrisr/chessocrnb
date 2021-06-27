@@ -1,17 +1,15 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='sitegen',
+    name='chessocr',
     version='0.0.1',
-    description='Blog site generator',
+    description='chess board finder',
     author='idrisr',
     author_email='id@hippoplant.com',
-    keywords=['sitegen', 'jekyll'],
+    keywords=['chess', 'ocr'],
     #  entry_points={'console_scripts': ['kaggle = kaggle.cli:main']},
     install_requires=[
-        'nbconvert',
-        'tzlocal',
-        'traitlets',
+        'fastai',
     ],
     packages=find_packages(),
     license='Apache 2.0')
