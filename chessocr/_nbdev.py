@@ -16,6 +16,10 @@ index = {"URLs.chess_small": "01_preprocess.ipynb",
          "contour_to_hough": "01_preprocess.ipynb",
          "color_to_contours": "01_preprocess.ipynb",
          "Lines": "01_preprocess.ipynb",
+         "NoLabelBBoxLabeler": "02-learner.ipynb",
+         "BBoxTruth": "02-learner.ipynb",
+         "iou": "02-learner.ipynb",
+         "NoLabelBBoxBlock": "02-learner.ipynb",
          "Coord": "03-piece-classifier.ipynb",
          "CropBox": "03-piece-classifier.ipynb",
          "Color": "03-piece-classifier.ipynb",
@@ -45,6 +49,7 @@ index = {"URLs.chess_small": "01_preprocess.ipynb",
          "Render": "06-training-data.ipynb"}
 
 modules = ["preprocess.py",
+           "learner.py",
            "classifier.py",
            "hough.py",
            "training.py"]

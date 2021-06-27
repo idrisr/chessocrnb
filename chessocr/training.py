@@ -173,19 +173,10 @@ class FEN:
         assert len(format(self))==64
 
     def __repr__(self): return "FEN(\"{}\")".format(self.fen)
-
-    def __str__(self):
-        return "\n".join([format(self)[0:8],
-                          format(self)[8:16],
-                          format(self)[16:24],
-                          format(self)[24:32],
-                          format(self)[32:40],
-                          format(self)[40:48],
-                          format(self)[48:56],
-                          format(self)[56:], "\n"
-                         ])
+    def __str__(self): return "\n".join([format(self)[slice(i*8, (i+1)*8)] for i in range(8)]+["\n"])
 
     def __format__(self, format_spec=""):
+        set_trace()
         if format_spec == "":
             f = self.fen
             for i in '12345678': f=f.replace(i, '_'*int(i))
@@ -196,7 +187,6 @@ class FEN:
             [(f'{f}{r}', FEN.converter(getattr(self, f'{f}{r}')),)
                      for f, r, in product('abcdefgh', '12345678')]
         )
-#                      if getattr(self, f'{f}{r}') != '_'])
 
     def __getattr__(self, attr):
         try:
