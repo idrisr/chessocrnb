@@ -54,13 +54,14 @@ NoLabelBBoxBlock = TransformBlock(type_tfms=TensorBBox.create,
                              item_tfms=[PointScaler, NoLabelBBoxLabeler])
 
 
-def learn():
+def learn(dls):
     learn = cnn_learner(dls, resnet18, 
                         metrics=[iou], 
                         loss_func=MSELossFlat())
     learn.model.cuda()
     learn.fine_tune(10)
     learn.show_results()
+    plt.savefig("results")
 
 
 if __name__ == '__main__':
