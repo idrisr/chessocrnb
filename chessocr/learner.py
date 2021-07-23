@@ -3,21 +3,23 @@
 __all__ = ['NoLabelBBoxLabeler', 'BBoxTruth', 'iou', 'NoLabelBBoxBlock']
 
 # Cell
-from fastcore.transform import *
 from fastai.data.all import *
-from fastai.vision.all import *
 from fastai.test_utils import synth_learner
-import pandas as pd
+from fastai.vision.all import *
+from fastcore.transform import *
 from pathlib import Path
-from nbdev import show_doc
-import os
+
 import chessocr
-from dataclasses import dataclass
+import os
+import pandas as pd
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+mpl.use('pdf')
 
 # Cell
 class NoLabelBBoxLabeler(Transform):
     """ Bounding box labeler with no label """
-    def setups(self, x): noop
     def decode (self, x, **kwargs):
         self.bbox,self.lbls = None,None
         return self._call('decodes', x, **kwargs)
@@ -26,6 +28,7 @@ class NoLabelBBoxLabeler(Transform):
         self.bbox = x
         return self.bbox if self.lbls is None else LabeledBBox(self.bbox, self.lbls)
 
+
 # Cell
 class BBoxTruth:
     """ get bounding box location from DataFrame """
@@ -33,6 +36,7 @@ class BBoxTruth:
     def __call__(self, o):
         size,x,y,*_ =self.df.iloc[int(o.stem)-1]
         return [[x,y, x+size, y+size]]
+
 
 # Cell
 def iou(pred, target):
@@ -44,6 +48,31 @@ def iou(pred, target):
     union_area = ((ab[:, :, 2] - ab[:, :, 0]) * (ab[:, :, 3] - ab[:, :, 1])).sum(axis=0) - intersect_area
     return (intersect_area / union_area).mean()
 
+
 # Cell
 NoLabelBBoxBlock = TransformBlock(type_tfms=TensorBBox.create,
                              item_tfms=[PointScaler, NoLabelBBoxLabeler])
+
+
+def learn():
+    learn = cnn_learner(dls, resnet18, 
+                        metrics=[iou], 
+                        loss_func=MSELossFlat())
+    learn.model.cuda()
+    learn.fine_tune(10)
+    learn.show_results()
+
+
+if __name__ == '__main__':
+    data_url = Path.home()/".fastai/data/chess"
+    df = pd.read_csv(data_url/'annotations.csv', index_col=0)
+    block = DataBlock(
+        blocks=(ImageBlock, NoLabelBBoxBlock), 
+        get_items=get_image_files,
+        get_y=[BBoxTruth(df)],
+        n_inp=1,
+        item_tfms=[Resize(224, method=ResizeMethod.Pad, pad_mode=PadMode.Border)])
+
+    dls=block.dataloaders(data_url, batch_size=64)
+    dls.show_batch(max_n=9, figsize=(8, 8))
+    plt.savefig("batch")
