@@ -54,6 +54,7 @@ def get_learner(dls):
     learn.model.cuda()
     return learn
 
+
 def get_dataloader():
     data_url = Path.home()/".fastai/data/chess"
     df = pd.read_csv(data_url/'annotations.csv', index_col=0)
@@ -73,9 +74,14 @@ def get_dataloader():
 def plot_top_losses(x: TensorImage, y: TensorBBox, samples, outs, raws, losses, nrows=None, ncols=None, figsize=None, **kwargs):
     axs = get_grid(len(samples), nrows=nrows, ncols=ncols, add_vert=1,
             figsize=figsize, title='IOU')
+    bboxtruth = BBoxTruth(df)
     for ax,s,o,r,l in zip(axs, samples, outs, raws, losses):
-        s[0].show(ctx=ax, **kwargs)
-        o[0].show(ctx=ax, **kwargs)
+        x0,y0,x1,y1=[i.item() for i in o[0].squeeze(0)]
+        img1=s[0]
+        img2=img1[y0:y1,x0:x1].resize(img1.size)
+        line = img1.new_zeros(img1.shape[0], img1.shape[1], 10)
+        show_image(torch.cat([img1,line,img2], dim=2, ctx=ax, **kwargs)
+
         metric = iou(s[1], o[0])
         ax.set_title(f'{metric:.2f}')
 
