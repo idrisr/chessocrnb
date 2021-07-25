@@ -72,7 +72,7 @@ def get_dataloader():
 
 @typedispatch
 def plot_top_losses(x: TensorImage, y: TensorBBox, samples, outs, raws, losses, nrows=None, ncols=None, figsize=None, **kwargs):
-    axs = get_grid(len(samples), nrows=nrows, ncols=ncols, add_vert=1,
+    axs = get_grid(len(samples), nrows=nrows, ncols=1, add_vert=0,
             figsize=figsize, title='IOU')
     bboxtruth = BBoxTruth(df)
     for ax,s,o,r,l in zip(axs, samples, outs, raws, losses):
@@ -83,7 +83,7 @@ def plot_top_losses(x: TensorImage, y: TensorBBox, samples, outs, raws, losses, 
         show_image(torch.cat([img1,line,img2], dim=2, ctx=ax, **kwargs)
 
         metric = iou(s[1], o[0])
-        ax.set_title(f'{metric:.2f}')
+        ax.set_title(f'{metric:.2f}, {l.item():.2f}')
 
 @patch
 def __repr__(self:DataLoaders):
@@ -103,14 +103,15 @@ class Model:
                             metrics=[iou], 
                             loss_func=L1LossFlat())
 
-    def __enter__(self): return self.load()
+    def __enter__(self): return self.load_()
     def __exit__(self, exc_type, exc_value, traceback): self.save()
 
-    def load(self, name=None):
+    def load_(self, name=None):
         models = get_files(Path("models/"), ".pth")
         if not models: return self.learner
         model = sorted(models, reverse=True)[0]
-        return self.learner.load(model.stem)
+        self.learner = self.learner.load(model.stem)
+        return self.learner
 
     def save(self):
         name = datetime.strftime(datetime.now(), "%Y-%m-%d-%H-%M-%S")
@@ -123,4 +124,4 @@ class Model:
 if __name__ == '__main__':
     block, dls = get_dataloader()
     with Model(dls) as learner:
-        learner.fine_tune(200)
+        pass
